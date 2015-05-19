@@ -27,7 +27,7 @@ var notifySong = function() {
 
 var loadPlaylist = function() {
   //printPlaylists();
-  console.log(mopidy.tracklist.getState());
+  console.log(mopidy.tracklist.get_tl_tracks());
   /*
   mopidy.playlists.getPlaylists().then(function(playlists){
     var playlist = playlists[0];
@@ -53,7 +53,6 @@ var GPIO = require('onoff').Gpio,
 
 // define the callback function
 function light(err, state) {
-  
   // check the state of the button
   // 1 == pressed, 0 == not pressed
   if(state == 1) {
@@ -64,7 +63,6 @@ function light(err, state) {
     // turn LED off
     led.writeSync(0);
   }
-  
 }
 
 // pass the callback function to the
