@@ -27,7 +27,9 @@ var notifySong = function() {
 
 var loadPlaylist = function() {
   //printPlaylists();
-  console.log(mopidy.tracklist.get_tl_tracks());
+  mopidy.tracklist.getLength().then(function(len){
+    console.log(len);
+  });
   /*
   mopidy.playlists.getPlaylists().then(function(playlists){
     var playlist = playlists[0];
@@ -41,9 +43,17 @@ var loadPlaylist = function() {
 */
 };
 
+var startPlaying = function() {
+  return mopidy.playback.play().then(function() {
+    return notifySong(); 	
+  });
+};
+
 var skipTrack = function() {
-  mopidy.playback.next().then(notifySong);
-}
+  return mopidy.playback.next().then(function(){
+    return notifySong();
+  });
+};
 
 
 // button is attaced to pin 17, led to 18
@@ -58,14 +68,40 @@ function light(err, state) {
   if(state == 1) {
     // turn LED on
     led.writeSync(1);
-    skipTrack();
+    skipTrack().then(function(){
+      console.log("Track was skipped");
+    })
+    .catch(console.error.bind(console))
+    .done();
   } else {
     // turn LED off
     led.writeSync(0);
   }
 }
 
+var init = function() {
+  mopidy.tracklist.setRepeat(true).then(function(){
+    console.log("Set repeat to true.");
+  }).then(function(){
+    return mopidy.playlists.create("GpodderCasts", "podcast://www.npr.org/rss/podcast.php?id=510019");
+  })
+/*
+  }).then(function(playlist) {
+    return mopidy.tracklist.add(playlist.tracks);
+  }).then(function(tlTracks){
+    return mopidy.playback.play(tlTracks[0]);
+  }).then(function() {
+    return notifySong();
+  })
+*/
+  .then(function(playlist) {
+    console.log(playlist.name);
+  })
+  .catch(console.error.bind(console))
+  .done();
+};
+
 // pass the callback function to the
 // as the first argument to watch()
 button.watch(light);
-mopidy.on("state:online", loadPlaylist);
+mopidy.on("state:online", init);
