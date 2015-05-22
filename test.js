@@ -8,7 +8,7 @@ var mopidy = new Mopidy({
 });
 
 var getTrackDescription = function(track) {
-  return track.name + " by " + track.artists[0].name + " from " + track.album.name;
+  return track.name + " by " + track.artists[0].name + " from " + track.album.name + ". URI: " + track.uri;
 };
 
 var printPlaylists = function() {
@@ -57,7 +57,17 @@ var skipTrack = function() {
   });
 };
 
+var listTracks = function() {
+  mopidy.library.lookup("podcast+http://www.npr.org/rss/podcast.php?id=510019").then(function(lookedUpTracks) {
+    console.log(lookedUpTracks[0].uri, "name: " + lookedUpTracks[0].name);
+    
+  });
+
+};
+
 var init = function() {
+  bindButtons();
+
   mopidy.tracklist.setRepeat(true).then(function(){
     console.log("Set repeat to true.");
   }).then(function(){
@@ -126,8 +136,11 @@ function f3(err, state) {
   }
 }
 
+function bindButtons() {
+  button1.watch(listTracks);
+  button2.watch(f2);
+  button3.watch(f3);
+}
+
 // START HERE =======================================================================================
-button1.watch(f1);
-button2.watch(f2);
-button3.watch(f3);
 mopidy.on("state:online", init);
