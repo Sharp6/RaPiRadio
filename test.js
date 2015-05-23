@@ -87,7 +87,7 @@ var listTracks = function() {
 
 // This should return multiple podcasts
 var listPodcasts = function() {
-  mopidy.library.lookup("podcast+https://gpodder.net/user/Sharp6/favorites.xml").then(function(lookedUpTracks) {
+  mopidy.library.lookup("podcast+https://gpodder.net/user/Sharp6/subscriptions/rss/").then(function(lookedUpTracks) {
     console.log(lookedUpTracks.length);
   });
 };
