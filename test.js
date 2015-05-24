@@ -97,7 +97,7 @@ function loadPlaylist() {
 
   mopidy.playlists.getPlaylists().then(function(allPlaylists) {
     //I've got all playlists
-    console.log("I just loaded " + allPlaylists.length + " podcasts.");
+    console.log("I just loaded " + allPlaylists.length + " playlists.");
     var rapiRadioPlaylists = allPlaylists.map(function(playlist) {
       if(playlist.name === "RaPiRadio") {
         return playlist;
