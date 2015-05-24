@@ -4,7 +4,9 @@
 // OPERATIONAL FUNCTIONALITY ======================================================================
 var init = function() {
   bindButtons();
-  loadPodcastPlaylist();
+  loadPodcastPlaylist()
+  .catch(console.error.bind(console))
+  .done();
 };
 
 // This switches the mode from music to podcast
@@ -18,24 +20,59 @@ var switchState = function() {
   });
 };
 
+var switchMode = function() {
+  if(mode === "podcast") {
+    loadMusicPlaylist()
+    .then(function() {
+      mode = "music";
+    })
+    .catch(console.error.bind(console))
+    .done();
+  } else {
+    loadPodcastPlaylist()
+    .then(function() {
+      mode = "podcast";
+    })
+    .catch(console.error.bind(console))
+    .done();
+  }
+}
+
+
+var loadMusicPlaylist = function() {
+  return mopidy.playlists.getPlaylists().then(function(allPlaylists) {
+    //I've got all playlists
+    var rapiRadioPlaylists = allPlaylists.filter(function(playlist) {
+      if(playlist.name === "Evening") {
+        return true;
+      }
+    });
+    return mopidy.tracklist.clear().then(function() {
+      return mopidy.tracklist.add(rapiRadioPlaylists[0].tracks);
+    })
+    .then(function(addedTracks) {
+      console.log("I just added " + addedTracks.length + " tracks of the podcast playlist to the tracklist.");
+    });
+  });
+
+};
+
 // This loads the podcast playlist into the tracklist
 var loadPodcastPlaylist = function() {
-  mopidy.playlists.getPlaylists().then(function(allPlaylists) {
+  return mopidy.playlists.getPlaylists().then(function(allPlaylists) {
     //I've got all playlists
     var rapiRadioPlaylists = allPlaylists.filter(function(playlist) {
       if(playlist.name === "RaPiRadio") {
         return true;
       }
     });
-    mopidy.tracklist.clear().then(function() {
+    return mopidy.tracklist.clear().then(function() {
       return mopidy.tracklist.add(rapiRadioPlaylists[0].tracks);
     })
     .then(function(addedTracks) {
       console.log("I just added " + addedTracks.length + " tracks of the podcast playlist to the tracklist.");
     });
-  })
-  .catch(console.error.bind(console))
-  .done();
+  });
 };
 
 var notifyPlaylists = function() {
@@ -106,12 +143,13 @@ var button3  = new GPIO(4, 'in', 'rising');
 function bindButtons() {
   button1.watch(switchState);
   button2.watch(skipTrack);
-  //button3.watch(f3);
+  button3.watch(switchMode);
 }
 
 //  APP START HERE =======================================================================================
 // =======================================================================================================
 // Initiate mopidy
+var mode = "podcast";
 var Mopidy = require("mopidy");
 var mopidy = new Mopidy({
   webSocketUrl: "ws://localhost:6680/mopidy/ws",
