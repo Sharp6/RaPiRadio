@@ -39,7 +39,7 @@ var switchMode = function() {
 }
 
 var volumeUp = function() {
-  mopidy.mixer.getVolume().then(volume) {
+  mopidy.mixer.getVolume().then(function(volume) {
     if(volume > 95) {
       console.log("Volume is already maxed.");
     } else {
@@ -47,11 +47,11 @@ var volumeUp = function() {
         console.log("Increased volume to " + volume + ".");
       });
     }
-  }
+  });
 };
 
 var volumeDown = function() {
-  mopidy.mixer.getVolume().then(volume) {
+  mopidy.mixer.getVolume().then(function(volume) {
     if(volume < 5) {
       console.log("Volume is already at minimal.");
     } else {
@@ -59,7 +59,7 @@ var volumeDown = function() {
         console.log("Decreased volume to " + volume + ".");
       });
     }
-  }
+  });
 };
 
 
