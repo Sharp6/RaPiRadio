@@ -92,6 +92,28 @@ var listPodcasts = function() {
   });
 };
 
+// This tries lo load a created playlist
+function loadPlaylist() {
+
+  mopidy.playlists.getPlaylists().then(function(allPlaylists) {
+    //I've got all playlists
+    console.log("I just loaded " + allPlaylists.length + " podcasts.");
+    var rapiRadioPlaylists = allPlaylists.map(function(playlist) {
+      if(playlist.name === "RaPiRadio") {
+        return playlist;
+      }
+    });
+    console.log("The playlist to load is " + rapiRadioPlaylists[0].name + " and its length is " + rapiRadioPlaylists[0].tracks.length);
+    mopidy.tracklist.clear().then(function() {
+      console.log("Tracklist is now cleared.");
+      return mopidy.trackslst.add(rapiRadioPlaylists[0].tracks);
+    })
+    .then(function(addedTracks) {
+      console.log("I just added " + addedTracks.length + " tracks.");
+    });
+  });
+}
+
 
 
 
@@ -145,7 +167,7 @@ function f3(err, state) {
 
 function bindButtons() {
   button1.watch(listTracks);
-  button2.watch(listPodcasts);
+  button2.watch(loadPlaylist);
   button3.watch(f3);
 }
 
