@@ -88,31 +88,36 @@ var listTracks = function() {
 // This should return multiple podcasts
 var listPodcasts = function() {
   mopidy.library.browse("podcast+https://gpodder.net/user/Sharp6/subscriptions/rss").then(function(lookedUpTracks) {
-    console.log(lookedUpTracks.length);
+    console.log("ListPodcasts: " + lookedUpTracks.length);
   });
 };
 
 // This tries lo load a created playlist
-function loadPlaylist() {
-
+//function loadPlaylist() {
+var loadPlaylist = function() {
+  console.log("Loading playlists");
   mopidy.playlists.getPlaylists().then(function(allPlaylists) {
     //I've got all playlists
     console.log("I just loaded " + allPlaylists.length + " podcasts.");
-    var rapiRadioPlaylists = allPlaylists.map(function(playlist) {
+    var rapiRadioPlaylists = allPlaylists.filter(function(playlist) {
+      console.log("Checking playlist " + playlist.name);
       if(playlist.name === "RaPiRadio") {
-        return playlist;
+	console.log("Got him!");
+        return true;
       }
     });
     console.log("The playlist to load is " + rapiRadioPlaylists[0].name + " and its length is " + rapiRadioPlaylists[0].tracks.length);
     mopidy.tracklist.clear().then(function() {
       console.log("Tracklist is now cleared.");
-      return mopidy.trackslst.add(rapiRadioPlaylists[0].tracks);
+      return mopidy.tracklist.add(rapiRadioPlaylists[0].tracks);
     })
     .then(function(addedTracks) {
       console.log("I just added " + addedTracks.length + " tracks.");
     });
-  });
-}
+  })
+  .catch(console.error.bind(console))
+  .done();;
+};
 
 
 
