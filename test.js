@@ -51,7 +51,7 @@ var notifyPlaylists = function() {
 
 var notifySong = function() {
   return mopidy.playback.getCurrentTrack().then(function(track) {
-    console.log("Now playing: ", getTrackDescription(track));
+    console.log("Now playing: ", track.name);
   });
 };
 
