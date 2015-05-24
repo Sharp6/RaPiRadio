@@ -105,7 +105,7 @@ var button3  = new GPIO(4, 'in', 'rising');
 // CALLBACKS =======================================================================================
 function bindButtons() {
   button1.watch(switchState);
-  //button2.watch(loadPlaylist);
+  button2.watch(skipTrack);
   //button3.watch(f3);
 }
 
