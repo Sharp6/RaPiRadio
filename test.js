@@ -38,6 +38,30 @@ var switchMode = function() {
   }
 }
 
+var volumeUp = function() {
+  mopidy.mixer.getVolume().then(volume) {
+    if(volume > 95) {
+      console.log("Volume is already maxed.");
+    } else {
+      mopidy.mixer.setVolume(volume + 5).then(function() {
+        console.log("Increased volume to " + volume + ".");
+      });
+    }
+  }
+};
+
+var volumeDown = function() {
+  mopidy.mixer.getVolume().then(volume) {
+    if(volume < 5) {
+      console.log("Volume is already at minimal.");
+    } else {
+      mopidy.mixer.setVolume(volume - 5).then(function() {
+        console.log("Decreased volume to " + volume + ".");
+      });
+    }
+  }
+};
+
 
 var loadMusicPlaylist = function() {
   return mopidy.playlists.getPlaylists().then(function(allPlaylists) {
@@ -51,7 +75,7 @@ var loadMusicPlaylist = function() {
       return mopidy.tracklist.add(rapiRadioPlaylists[0].tracks);
     })
     .then(function(addedTracks) {
-      console.log("I just added " + addedTracks.length + " tracks of the podcast playlist to the tracklist.");
+      console.log("I just added " + addedTracks.length + " tracks of the music playlist to the tracklist.");
     });
   });
 
@@ -123,12 +147,6 @@ var listPodcasts = function() {
   });
 };
 
-
-
-
-
-
-
 // GPIO =========================================================================================
 // ==============================================================================================
 // button is attaced to pin 17, led to 18
@@ -141,8 +159,8 @@ var button3  = new GPIO(4, 'in', 'rising');
 
 // CALLBACKS =======================================================================================
 function bindButtons() {
-  button1.watch(switchState);
-  button2.watch(skipTrack);
+  button1.watch(volumeUp);
+  button2.watch(volumeDown);
   button3.watch(switchMode);
 }
 
