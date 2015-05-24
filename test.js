@@ -4,44 +4,34 @@
 // OPERATIONAL FUNCTIONALITY ======================================================================
 var init = function() {
   bindButtons();
-
-  mopidy.tracklist.setRepeat(true).then(function(){
-    console.log("Set repeat to true.");
-  }).then(function(){
-    return mopidy.playlists.create("My Podcasts", "podcast://www.npr.org/rss/podcast.php?id=510019");
-  })
-/*
-  }).then(function(playlist) {
-    return mopidy.tracklist.add(playlist.tracks);
-  }).then(function(tlTracks){
-    return mopidy.playback.play(tlTracks[0]);
-  }).then(function() {
-    return notifySong();
-  })
-*/
-  .then(function(playlist) {
-    console.log(playlist.name);
-  })
-  .catch(console.error.bind(console))
-  .done();
+  loadPodcastPlaylist();
 };
 
-var loadPlaylist = function() {
-  //printPlaylists();
-  mopidy.tracklist.getLength().then(function(len){
-    console.log(len);
+// This switches the mode from music to podcast
+var switchState = function() {
+  mopidy.playback.getState().then(function(state) {
+    console.log(state);
   });
-  /*
-  mopidy.playlists.getPlaylists().then(function(playlists){
-    var playlist = playlists[0];
-    console.log("Loading playlist: ", playlist.name);
-    return mopidy.tracklist.add(playlist.tracks).then(function(tlTracks) {
-      return mopidy.playback.play(tlTracks[0]).then(notifySong);
-    }); 
+}
+
+// This loads the podcast playlist into the tracklist
+var loadPodcastPlaylist = function() {
+  mopidy.playlists.getPlaylists().then(function(allPlaylists) {
+    //I've got all playlists
+    var rapiRadioPlaylists = allPlaylists.filter(function(playlist) {
+      if(playlist.name === "RaPiRadio") {
+        return true;
+      }
+    });
+    mopidy.tracklist.clear().then(function() {
+      return mopidy.tracklist.add(rapiRadioPlaylists[0].tracks);
+    })
+    .then(function(addedTracks) {
+      console.log("I just added " + addedTracks.length + " tracks of the podcast playlist to the tracklist.");
+    });
   })
   .catch(console.error.bind(console))
   .done();
-*/
 };
 
 var notifyPlaylists = function() {
@@ -88,31 +78,11 @@ var listTracks = function() {
 // This should return multiple podcasts
 var listPodcasts = function() {
   mopidy.library.browse("podcast+https://gpodder.net/user/Sharp6/subscriptions/rss").then(function(lookedUpTracks) {
-    console.log(lookedUpTracks.length);
+    console.log("ListPodcasts: " + lookedUpTracks.length);
   });
 };
 
-// This tries lo load a created playlist
-function loadPlaylist() {
 
-  mopidy.playlists.getPlaylists().then(function(allPlaylists) {
-    //I've got all playlists
-    console.log("I just loaded " + allPlaylists.length + " playlists.");
-    var rapiRadioPlaylists = allPlaylists.map(function(playlist) {
-      if(playlist.name === "RaPiRadio") {
-        return playlist;
-      }
-    });
-    console.log("The playlist to load is " + rapiRadioPlaylists[0].name + " and its length is " + rapiRadioPlaylists[0].tracks.length);
-    mopidy.tracklist.clear().then(function() {
-      console.log("Tracklist is now cleared.");
-      return mopidy.trackslst.add(rapiRadioPlaylists[0].tracks);
-    })
-    .then(function(addedTracks) {
-      console.log("I just added " + addedTracks.length + " tracks.");
-    });
-  });
-}
 
 
 
@@ -129,46 +99,10 @@ var button3  = new GPIO(4, 'in', 'rising');
 
 
 // CALLBACKS =======================================================================================
-// define the callback function
-function light(err, state) {
-  // check the state of the button
-  // 1 == pressed, 0 == not pressed
-  if(state == 1) {
-    // turn LED on
-    led.writeSync(1);
-    skipTrack().then(function(){
-      console.log("Track was skipped");
-    })
-    .catch(console.error.bind(console))
-    .done();
-  } else {
-    // turn LED off
-    led.writeSync(0);
-  }
-}
-
-function f1(err, state) {
-  if(state == 1) {
-    console.log("Function 1.");
-  }
-}
-
-function f2(err, state) {
-  if(state == 1) {
-    console.log("Function 2.");
-  }
-}
-
-function f3(err, state) {
-  if(state == 1) {
-    console.log("Function 3.");
-  }
-}
-
 function bindButtons() {
-  button1.watch(listTracks);
-  button2.watch(loadPlaylist);
-  button3.watch(f3);
+  button1.watch(switchState);
+  //button2.watch(loadPlaylist);
+  //button3.watch(f3);
 }
 
 //  APP START HERE =======================================================================================
