@@ -10,9 +10,13 @@ var init = function() {
 // This switches the mode from music to podcast
 var switchState = function() {
   mopidy.playback.getState().then(function(state) {
-    console.log(state);
+    if(state === "playing") {
+      mopidy.playback.pause();
+    } else {
+      mopidy.playback.play();
+    }
   });
-}
+};
 
 // This loads the podcast playlist into the tracklist
 var loadPodcastPlaylist = function() {
