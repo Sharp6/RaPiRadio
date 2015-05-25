@@ -147,6 +147,19 @@ var listPodcasts = function() {
   });
 };
 
+var enableSleepMode = function() {
+  if(sleeper) {
+    clearTimeout(sleeper);
+  } else {
+    sleeper = setTimeout(goToSleep, 5000);
+    console.log("Sleepmode activated");
+  }
+};
+
+var goToSleep = function() {
+  console.log("Nighty night!");
+};
+
 // GPIO =========================================================================================
 // ==============================================================================================
 // button is attaced to pin 17, led to 18
@@ -161,13 +174,17 @@ var button3  = new GPIO(4, 'in', 'rising');
 function bindButtons() {
   button1.watch(volumeUp);
   button2.watch(volumeDown);
-  button3.watch(switchMode);
+  button3.watch(enableSleepMode);
 }
 
 //  APP START HERE =======================================================================================
 // =======================================================================================================
-// Initiate mopidy
+// CONSTANTS
+// sleep time, podcast playlist name, spotify playlist name
+
 var mode = "podcast";
+var sleeper;
+
 var Mopidy = require("mopidy");
 var mopidy = new Mopidy({
   webSocketUrl: "ws://localhost:6680/mopidy/ws",
