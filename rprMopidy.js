@@ -88,24 +88,21 @@ module.exports = (function() {
 
 	function switchMode( currentMode ) {
 		var newMode;
-
-	  if(currentMode === "podcast") {
-	    loadMusicPlaylist()
-	    .then(function() {
-	    	newMode = "music";
-	      return newMode;
-	    })
-	    .catch(console.error.bind(console))
-	    .done();
-	  } else {
-	    loadPodcastPlaylist()
-	    .then(function() {
-	      newMode = "podcast";
-	      return newMode;
-	    })
-	    .catch(console.error.bind(console))
-	    .done();
-	  }
+		return Promise.resolve().then(function() {
+			if(currentMode === "podcast") {
+		    loadMusicPlaylist()
+		    .then(function() {
+		    	newMode = "music";
+		      return newMode;
+		    });
+		  } else {
+		    loadPodcastPlaylist()
+		    .then(function() {
+		      newMode = "podcast";
+		      return newMode;
+		    });
+		  }
+		});
 	}
 
 	function volumeUp() {
