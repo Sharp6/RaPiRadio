@@ -76,7 +76,7 @@ var rprMopidy = (function() {
 	};
 
   // PUBLIC FUNCTIONALITY ===========================================================================
-  var switchState = function() {
+  function switchState() {
 	  mopidy.playback.getState().then(function(state) {
 	    if(state === "playing") {
 	      mopidy.playback.pause();
@@ -84,9 +84,9 @@ var rprMopidy = (function() {
 	      mopidy.playback.play();
 	    }
 	  });
-	};
+	}
 
-	var switchMode = function() {
+	function switchMode() {
 	  if(mode === "podcast") {
 	  	console.log("Got mode!");
 	    loadMusicPlaylist()
@@ -105,7 +105,7 @@ var rprMopidy = (function() {
 	  }
 	}
 
-	var volumeUp = function() {
+	function volumeUp() {
 	  mopidy.mixer.getVolume().then(function(volume) {
 	    if(volume > 95) {
 	      console.log("Volume is already maxed.");
@@ -115,9 +115,9 @@ var rprMopidy = (function() {
 	      });
 	    }
 	  });
-	};
+	}
 
-	var volumeDown = function() {
+	function volumeDown() {
 	  mopidy.mixer.getVolume().then(function(volume) {
 	    if(volume < 5) {
 	      console.log("Volume is already at minimal.");
@@ -127,7 +127,7 @@ var rprMopidy = (function() {
 	      });
 	    }
 	  });
-	};
+	}
 
 
   // MOPIDY INITIALIZATION
