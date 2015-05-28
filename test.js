@@ -150,10 +150,9 @@ var listPodcasts = function() {
 var enableSleepMode = function() {
   if(sleeper) {
     clearTimeout(sleeper);
-  } else {
-    sleeper = setTimeout(goToSleep, 5000);
-    console.log("Sleepmode activated");
-  }
+  } 
+  sleeper = setTimeout(goToSleep, 5000);
+  console.log("Sleepmode activated");
 };
 
 var goToSleep = function() {
