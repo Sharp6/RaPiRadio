@@ -1,4 +1,4 @@
-var rprMopidy = (function() {
+module.exports = (function() {
   function init() {
     loadPodcastPlaylist()
       .catch(console.error.bind(console))
