@@ -15,6 +15,7 @@ var button3  = new GPIO(4, 'in', 'rising');
 
 function closureSwitchMode() {
 	rprMopidy.switchMode(mode).then(function(newMode) {
+		mode = newMode;
 		console.log("The new mode is: " + newMode);
 	});
 //	.catch(console.error.bind(console))
