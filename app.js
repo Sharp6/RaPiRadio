@@ -4,4 +4,4 @@
 var mode = "podcast";
 var sleeper;
 
-var rprMopidy = require("rprMopidy");
+var rprMopidy = require("./rprMopidy");
