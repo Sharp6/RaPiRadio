@@ -150,7 +150,7 @@ var listPodcasts = function() {
 var enableSleepMode = function() {
   if(sleeper) {
     clearTimeout(sleeper);
-  }
+  } 
   sleeper = setTimeout(goToSleep, 5000);
   console.log("Sleepmode activated");
 };
