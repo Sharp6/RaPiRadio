@@ -88,7 +88,7 @@ module.exports = (function() {
 
 	function switchMode( currentMode ) {
 		var newMode;
-		return Promise.resolve().then(function() {
+		return Promise.resolve().then(function a() {
 			if(currentMode === "podcast") {
 		    loadMusicPlaylist()
 		    .then(function() {
@@ -97,7 +97,7 @@ module.exports = (function() {
 		    });
 		  } else {
 		    loadPodcastPlaylist()
-		    .then(function() {
+		    .then(function b() {
 		      newMode = "podcast";
 		      return newMode;
 		    });
