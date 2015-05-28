@@ -86,19 +86,22 @@ module.exports = (function() {
 	  });
 	}
 
-	function switchMode() {
-	  if(global.mode === "podcast") {
-	  	console.log("Got mode!");
+	function switchMode( currentMode ) {
+		var newMode;
+
+	  if(currentMode === "podcast") {
 	    loadMusicPlaylist()
 	    .then(function() {
-	      global.mode = "music";
+	    	newMode = "music";
+	      return newMode;
 	    })
 	    .catch(console.error.bind(console))
 	    .done();
 	  } else {
 	    loadPodcastPlaylist()
 	    .then(function() {
-	      global.mode = "podcast";
+	      newMode = "podcast";
+	      return newMode;
 	    })
 	    .catch(console.error.bind(console))
 	    .done();
