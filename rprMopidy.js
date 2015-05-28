@@ -88,6 +88,7 @@ var rprMopidy = (function() {
 
 	var switchMode = function() {
 	  if(mode === "podcast") {
+	  	console.log("Got mode!");
 	    loadMusicPlaylist()
 	    .then(function() {
 	      mode = "music";
