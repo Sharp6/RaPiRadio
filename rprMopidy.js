@@ -87,18 +87,18 @@ module.exports = (function() {
 	}
 
 	function switchMode() {
-	  if(mode === "podcast") {
+	  if(global.mode === "podcast") {
 	  	console.log("Got mode!");
 	    loadMusicPlaylist()
 	    .then(function() {
-	      mode = "music";
+	      global.mode = "music";
 	    })
 	    .catch(console.error.bind(console))
 	    .done();
 	  } else {
 	    loadPodcastPlaylist()
 	    .then(function() {
-	      mode = "podcast";
+	      global.mode = "podcast";
 	    })
 	    .catch(console.error.bind(console))
 	    .done();
