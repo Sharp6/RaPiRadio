@@ -87,21 +87,21 @@ module.exports = (function() {
 	}
 
 	function switchMode( currentMode ) {
-		var newMode;
 		
-		if(currentMode === "podcast") {
-	    loadMusicPlaylist()
-	    .then(function() {
-	    	newMode = "music";
-	      return Promise.resolve(newMode);
-	    });
-	  } else {
-	    loadPodcastPlaylist()
-	    .then(function() {
-	      newMode = "podcast";
-	      return Promise.resolve(newMode);
-	    });
-	  }
+
+		return Promise.resolve().then(function () {
+			var newMode;
+
+			if(currentMode === "podcast") {
+				newMode = "music";
+				loadMusicPlaylist();
+			} else {
+				newMode = "podcast";
+				loadPodcastPlaylist();
+			}
+
+			return newMode;
+		});
 		
 	}
 
