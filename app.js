@@ -14,7 +14,7 @@ var button3  = new GPIO(4, 'in', 'rising');
 
 
 function closureSwitchMode() {
-	rprMopidy.switchMode(mode);
+	mode = rprMopidy.switchMode(mode);
 }
 
 // CALLBACKS =======================================================================================
