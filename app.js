@@ -1,28 +1,48 @@
 // CONSTANTS
 // sleep time, podcast playlist name, spotify playlist name
 
+// GLOBAL STATE
 var mode = "podcast";
 var sleeper;
 
 var rprMopidy = require("./rprMopidy");
 
-
-var GPIO    = require('onoff').Gpio;
-var button1  = new GPIO(2, 'in', 'rising');
-var button2  = new GPIO(3, 'in', 'rising');
-var button3  = new GPIO(4, 'in', 'rising');
+initButtons();
 
 
-function closureSwitchMode() {
+function parameteredSwitchMode() {
 	rprMopidy.switchMode(mode).then(function(newMode) {
 		mode = newMode;
 		console.log("The new mode is: " + newMode);
 	});
-//	.catch(console.error.bind(console))
-//  .done();
 }
 
-// CALLBACKS =======================================================================================
-button1.watch(rprMopidy.volumeUp);
-button2.watch(rprMopidy.volumeDown);
-button3.watch(closureSwitchMode);
+function enableSleepMode() {
+  if(sleeper) {
+    clearTimeout(sleeper);
+  } 
+  sleeper = setTimeout(goToSleep, 5000);
+  console.log("Sleepmode activated");
+};
+
+function goToSleep() {
+  console.log("Nighty night!");
+};
+
+function initButtons() {
+  var GPIO = require('onoff').Gpio;
+	var volumeUpButton    = new GPIO(2, 'in', 'rising');
+	var volumeDownButton  = new GPIO(3, 'in', 'rising');
+	var switchModeButton  = new GPIO(4, 'in', 'rising');
+	var playButton; 
+	var skipButton;
+	var sleepButton;
+	//var powerButton; // pure harware switch
+
+	volumeUpButton.watch(rprMopidy.volumeUp);
+	volumeDownButton.watch(rprMopidy.volumeDown);
+	switchModeButton.watch(parameteredSwitchMode);
+	playButton.watch(rprMopidy.switchState);
+	skipButton.watch(skipTrack);
+	sleepButton.watch(enableSleepMode);
+}

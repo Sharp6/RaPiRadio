@@ -20,7 +20,6 @@ module.exports = (function() {
 	      console.log("I just added " + addedTracks.length + " tracks of the music playlist to the tracklist.");
 	    });
 	  });
-
 	};
 
 	// This loads the podcast playlist into the tracklist
