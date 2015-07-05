@@ -10,12 +10,7 @@ module.exports = (function() {
 		board = new five.Board({
 		  io: new raspi()
 		});
-		var myP = new Promise(function(resolve,reject) {
-			initJ5().then(function() {
-				resolve();
-			});
-		});
-		return myP;
+		return initJ5();
 	}
 
 	function initJ5() {
