@@ -2,6 +2,8 @@ module.exports = (function() {
   var a1;
 	var b1, b2, b3, b4;
 
+	var a1buffer = 0;
+
 	var raspi = require('raspi-io');
 	var five = require('johnny-five');
 	var board;
@@ -40,12 +42,15 @@ module.exports = (function() {
 
 	function bindControls(methods) {
   	a1.on("change", function() {
-  		var newVolume = this.value * 100 / 1024;
-  		if(newVolume > 99) {
-  			newVolume=100;
+  		if(Math.abs(this.value - a1buffer) > 50) {
+  			a1buffer = this.value;
+  			var newVolume = this.value * 100 / 1024;
+	  		if(newVolume > 99) {
+	  			newVolume=100;
+	  		}
+	  		methods.setVolume(newVolume);
+		    console.log("VolumeKnob changed " + this.value);
   		}
-  		methods.setVolume(newVolume);
-	    console.log("VolumeKnob changed " + this.value);
 	  });
 
 	  b1.on("down", function() {
