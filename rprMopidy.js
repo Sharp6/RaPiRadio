@@ -1,8 +1,23 @@
 module.exports = (function() {
+	var Mopidy = require("mopidy");
+	var mopidy
+
   function init() {
-    loadPodcastPlaylist()
-      .catch(console.error.bind(console))
-      .done();
+
+  	return new Promise(function(resolve,reject) {
+
+	  	// MOPIDY INITIALIZATION
+		  mopidy = new Mopidy({
+		    webSocketUrl: "ws://localhost:6680/mopidy/ws",
+		    callingConvention: "by-position-only"
+		  });
+		  mopidy.on("state:online", function() {
+		  	loadPodcastPlaylist()
+		      .catch(console.error.bind(console))
+		      .done();
+		    resolve();	
+		  });
+		});
   }
 
 	var loadMusicPlaylist = function() {
@@ -134,17 +149,8 @@ module.exports = (function() {
 		});
 	}
 
-
-  // MOPIDY INITIALIZATION
-  var Mopidy = require("mopidy");
-  var mopidy = new Mopidy({
-    webSocketUrl: "ws://localhost:6680/mopidy/ws",
-    callingConvention: "by-position-only"
-  });
-  mopidy.on("state:online", init);
-
-
   return {
+  	init: init,
   	switchState: switchState,
   	switchMode: switchMode,
   	volumeUp: volumeUp,

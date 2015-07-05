@@ -8,15 +8,19 @@ var sleeper;
 var rprMopidy = require("./rprMopidy");
 var j5controls = require("./j5controls");
 
-j5controls.init().then(function(){
-	j5controls.bindControls({
-		enableSleepMode: enableSleepMode,
-		switchMode: parameteredSwitchMode,
-		switchState: rprMopidy.switchState,
-		skipTrack: rprMopidy.skipTrack,
-		setVolume: rprMopidy.setVolume
+rprMopidy.init()
+	.then(function() {
+		return j5controls.init();
+	})
+	.then(function(){
+		j5controls.bindControls({
+			enableSleepMode: enableSleepMode,
+			switchMode: parameteredSwitchMode,
+			switchState: rprMopidy.switchState,
+			skipTrack: rprMopidy.skipTrack,
+			setVolume: rprMopidy.setVolume
+		});
 	});
-});
 
 function parameteredSwitchMode() {
 	rprMopidy.switchMode(mode).then(function(newMode) {
