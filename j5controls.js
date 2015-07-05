@@ -12,6 +12,8 @@ module.exports = (function() {
 		});
 		var myP = new Promise(function(resolve,reject) {
 			board.on('ready', initJ5);
+			board.on('ready', resolve);
+
 		});
 		return myP;
 	}
@@ -32,8 +34,6 @@ module.exports = (function() {
 		b2 = new five.Button(27);
 		b3 = new five.Button(28);
 		b4 = new five.Button(29);
-
-	  resolve("J5 ready");
 	}
 
 	function bindControls(methods) {
