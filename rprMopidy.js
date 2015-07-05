@@ -128,6 +128,12 @@ module.exports = (function() {
 	  });
 	}
 
+	function setVolume(newVolume) {
+		mopidy.mixer.setVolume(newVolume).then(function(settedVolume) {
+			console.log("Volume has been set to " + settedVolume);
+		});
+	}
+
 
   // MOPIDY INITIALIZATION
   var Mopidy = require("mopidy");
@@ -143,7 +149,8 @@ module.exports = (function() {
   	switchMode: switchMode,
   	volumeUp: volumeUp,
   	volumeDown: volumeDown,
-  	skipTrack: skipTrack
+  	skipTrack: skipTrack,
+  	setVolume: setVolume
   };
 
 })();

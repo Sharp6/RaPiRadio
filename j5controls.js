@@ -40,7 +40,9 @@ module.exports = (function() {
 
 	function bindControls(methods) {
   	a1.on("change", function() {
-	    console.log(this.value);
+  		var newVolume = this.value * 100 / 1024;
+  		methods.setVolume(newVolume);
+	    console.log("VolumeKnob changed " + this.value);
 	  });
 
 	  b1.on("down", function() {
