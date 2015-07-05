@@ -6,9 +6,7 @@ var mode = "podcast";
 var sleeper;
 
 var rprMopidy = require("./rprMopidy");
-
-initButtons();
-
+var j5controls = require("./j5controls");
 
 function parameteredSwitchMode() {
 	rprMopidy.switchMode(mode).then(function(newMode) {
