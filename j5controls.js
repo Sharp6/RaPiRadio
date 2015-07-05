@@ -44,8 +44,23 @@ module.exports = (function() {
 	  });
 
 	  b1.on("down", function() {
-	    console.log("b1 down");
+	  	console.log("sleepButton down");
 	    methods.enableSleepMode();
+	  });
+
+	  b2.on("down", function() {
+	  	console.log("modeButton down");
+	    methods.switchMode();
+	  });
+		
+		b3.on("down", function() {
+			console.log("stateButton down");
+	    methods.switchState();
+	  });
+
+	  b4.on("down", function() {
+	  	console.log("skipButton down");
+	    methods.skipTrack();
 	  });
 
 	  console.log("J5: controls are bound.");

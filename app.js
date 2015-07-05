@@ -10,7 +10,10 @@ var j5controls = require("./j5controls");
 
 j5controls.init().then(function(){
 	j5controls.bindControls({
-		enableSleepMode: enableSleepMode
+		enableSleepMode: enableSleepMode,
+		switchMode: parameteredSwitchMode,
+		switchState: rprMopidy.switchState,
+		skipTrack: rprMopidy.skipTrack
 	});
 });
 
