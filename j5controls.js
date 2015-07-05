@@ -13,6 +13,7 @@ module.exports = (function() {
 		var myP = new Promise(function(resolve,reject) {
 			board.on('ready', initJ5);
 		});
+		return myP;
 	}
 
 	function initJ5() {
