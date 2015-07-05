@@ -10,7 +10,7 @@ module.exports = (function() {
 	board.on('ready', initJ5);
 
 	function initJ5() {
-		console.log("J5 ready for commands");
+		console.log("J5: ready for action.");
 
 	  var virtual = new five.Board.Virtual(
 	    new five.Expander("PCF8591")
@@ -34,6 +34,8 @@ module.exports = (function() {
 	  b1.on("down", function() {
 	    console.log("b1 down");
 	  });
+
+	  console.log("J5: controls are bound.");
   }
 
   return {
