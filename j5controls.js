@@ -11,29 +11,36 @@ module.exports = (function() {
 		  io: new raspi()
 		});
 		var myP = new Promise(function(resolve,reject) {
-			board.on('ready', initJ5);
-			board.on('ready', resolve);
-
+			initJ5().then(function() {
+				resolve();
+			});
 		});
 		return myP;
 	}
 
 	function initJ5() {
-		console.log("J5: ready for action.");
+		return new Promise(function(resolve,reject) {
+			board.on('ready', function() {
+				console.log("J5: ready for action.");
 
-	  var virtual = new five.Board.Virtual(
-	    new five.Expander("PCF8591")
-	  );
+			  var virtual = new five.Board.Virtual(
+			    new five.Expander("PCF8591")
+			  );
 
-	  a1 = new five.Sensor({
-	    pin: "A0",
-	    board: virtual
-	  });
+			  a1 = new five.Sensor({
+			    pin: "A0",
+			    board: virtual
+			  });
+				
+				b1 = new five.Button(26);
+				b2 = new five.Button(27);
+				b3 = new five.Button(28);
+				b4 = new five.Button(29);	
+				
+				resolve();
+			});	
+		});
 		
-		b1 = new five.Button(26);
-		b2 = new five.Button(27);
-		b3 = new five.Button(28);
-		b4 = new five.Button(29);
 	}
 
 	function bindControls(methods) {
