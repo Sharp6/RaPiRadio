@@ -4,10 +4,16 @@ module.exports = (function() {
 
 	var raspi = require('raspi-io');
 	var five = require('johnny-five');
-	var board = new five.Board({
-	  io: new raspi()
-	});
-	board.on('ready', initJ5);
+	var board;
+
+	function init() {
+		board = new five.Board({
+		  io: new raspi()
+		});
+		var myP = new Promise(function(resolve,reject) {
+			board.on('ready', initJ5);
+		});
+	}
 
 	function initJ5() {
 		console.log("J5: ready for action.");
@@ -21,26 +27,29 @@ module.exports = (function() {
 	    board: virtual
 	  });
 		
-		b1 = new five.Button({
-	    pin: 26
-	  });
+		b1 = new five.Button(26);
+		b2 = new five.Button(27);
+		b3 = new five.Button(28);
+		b4 = new five.Button(29);
 
-	  bindControls();
+	  resolve("J5 ready");
 	}
 
-	function bindControls() {
+	function bindControls(methods) {
   	a1.on("change", function() {
 	    console.log(this.value);
 	  });
 
 	  b1.on("down", function() {
 	    console.log("b1 down");
+	    methods.enableSleepMode();
 	  });
 
 	  console.log("J5: controls are bound.");
   }
 
   return {
+  	init: init,
   	bindControls: bindControls
   };
 
