@@ -8,8 +8,6 @@ var sleeper;
 var rprMopidy = require("./rprMopidy");
 var j5controls = require("./j5controls");
 
-j5controls.bindControls();
-
 function parameteredSwitchMode() {
 	rprMopidy.switchMode(mode).then(function(newMode) {
 		mode = newMode;

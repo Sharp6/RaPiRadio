@@ -24,6 +24,8 @@ module.exports = (function() {
 		b1 = new five.Button({
 	    pin: 26
 	  });
+
+	  bindControls();
 	}
 
 	function bindControls() {
