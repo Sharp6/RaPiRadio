@@ -13,7 +13,8 @@ j5controls.init().then(function(){
 		enableSleepMode: enableSleepMode,
 		switchMode: parameteredSwitchMode,
 		switchState: rprMopidy.switchState,
-		skipTrack: rprMopidy.skipTrack
+		skipTrack: rprMopidy.skipTrack,
+		setVolume: rprMopidy.setVolume
 	});
 });
 
