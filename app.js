@@ -9,7 +9,9 @@ var rprMopidy = require("./rprMopidy");
 var j5controls = require("./j5controls");
 
 j5controls.init().then(function(){
-	console.log("Oooh Yeah");
+	j5controls.bindControls({
+		enableSleepMode: enableSleepMode;
+	});
 });
 
 function parameteredSwitchMode() {
