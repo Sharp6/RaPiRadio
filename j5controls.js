@@ -41,6 +41,9 @@ module.exports = (function() {
 	function bindControls(methods) {
   	a1.on("change", function() {
   		var newVolume = this.value * 100 / 1024;
+  		if(newVolume > 99) {
+  			newVolume=100;
+  		}
   		methods.setVolume(newVolume);
 	    console.log("VolumeKnob changed " + this.value);
 	  });

@@ -144,9 +144,14 @@ module.exports = (function() {
 	}
 
 	function setVolume(newVolume) {
-		mopidy.mixer.setVolume(newVolume).then(function(settedVolume) {
-			console.log("Volume has been set to " + settedVolume);
-		});
+		mopidy.mixer.getVolume().then(function(volume) {
+			var delta = Math.abs(volume - newVolume);
+	    if(delta > 10) {
+	      mopidy.mixer.setVolume(newVolume).then(function(settedVolume) {
+					console.log("Volume has been set to " + settedVolume);
+				});
+	    } 
+	  });
 	}
 
   return {
