@@ -3,22 +3,20 @@
 
 // GLOBAL STATE
 var mode = "podcast";
-var sleeper;
 
 var rprMopidy = require("./rprMopidy");
 var j5controls = require("./j5controls");
+var sleeper = require("./sleeper");
 
-rprMopidy.init()
-	.then(function() {
-		return j5controls.init();
-	})
-	.then(function(){
-		j5controls.bindControls({
-			enableSleepMode: enableSleepMode,
+Promise.all([rprMopidy.init(), j5controls.init()])
+	.then(function(results){
+		return j5controls.bindControls({
+			enableSleepMode: sleeper.enableSleepMode,
 			switchMode: parameteredSwitchMode,
 			switchState: rprMopidy.switchState,
 			skipTrack: rprMopidy.skipTrack,
-			setVolume: rprMopidy.setVolume
+			volumeUp: rprMopidy.volumeUp,
+			volumeDown: rprMopidy.volumeDown
 		});
 	});
 
@@ -29,18 +27,7 @@ function parameteredSwitchMode() {
 	});
 }
 
-function enableSleepMode() {
-  if(sleeper) {
-    clearTimeout(sleeper);
-  } 
-  sleeper = setTimeout(goToSleep, 5000);
-  console.log("Sleepmode activated");
-};
-
-function goToSleep() {
-  console.log("Nighty night!");
-};
-
+/*
 function initButtons() {
   var GPIO = require('onoff').Gpio;
 	var volumeUpButton    = new GPIO(2, 'in', 'rising');
@@ -58,3 +45,4 @@ function initButtons() {
 	skipButton.watch(skipTrack);
 	sleepButton.watch(enableSleepMode);
 }
+*/
