@@ -38,7 +38,7 @@ var j5controls = function() {
 				for(var method in methods) {
 					console.log("J5CONTROLS: ASSIGNING METHOD: ", method);
 					console.log("Assigning button nr", btnNumber);
-					buttons[btnNumber].on("down", method);
+					buttons[btnNumber].on("down", methods[method]);
 					btnNumber++;
 				}
 				console.log("J5: controls are bound.");
