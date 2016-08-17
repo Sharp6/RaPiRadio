@@ -23,7 +23,7 @@ var j5controls = function() {
 				pins.map(function(pin) {
 					buttons.push(new five.Button(pin));	
 				});
-				
+
 				resolve(buttons);
 			});
 		});
