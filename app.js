@@ -10,6 +10,7 @@ var sleeper = require("./sleeper");
 
 Promise.all([rprMopidy.init(), j5controls.init()])
 	.then(function(results){
+		console.log("APP: binding controls");
 		return j5controls.bindControls({
 			enableSleepMode: sleeper.enableSleepMode,
 			switchMode: parameteredSwitchMode,
