@@ -30,10 +30,12 @@ var j5controls = function() {
 	}
 
 	function bindControls(methods) {
+		console.log("Binding controls");
 		return Promise.resolve()
 			.then(function() {
 				var btnNumber = 0;
 				for(var method in methods) {
+					console.log("Assigning button nr", btnNumber);
 					buttons[btnNumber].on("down", method);
 					btnNumber++;
 				}
