@@ -19,6 +19,9 @@ Promise.all([rprMopidy.init(), j5controls.init()])
 			volumeUp: rprMopidy.volumeUp,
 			volumeDown: rprMopidy.volumeDown
 		});
+	})
+	.catch(function(err) {
+		console.log(err);
 	});
 
 function parameteredSwitchMode() {
