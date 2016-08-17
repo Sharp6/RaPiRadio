@@ -12,4 +12,9 @@ module.exports = (function() {
 	function goToSleep() {
 		console.log("Nighty night!");
 	}
+
+	return {
+		enableSleepMode: enableSleepMode,
+		goToSleep: goToSleep
+	}
 })();
