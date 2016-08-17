@@ -11,8 +11,9 @@ module.exports = (function() {
 			});
 			mopidy.on("state:online", function() {
 				console.log("Mopidy is online");
-				loadPodcastPlaylist()
-					.then(resolve,reject);
+				resolve();
+				//loadPodcastPlaylist()
+				//	.then(resolve,reject);
 			});
 		});
 	}
