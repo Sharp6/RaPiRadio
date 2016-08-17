@@ -6,7 +6,7 @@ var j5controls = function() {
 	var board;
 
 	var buttons = new Array();
-	var pins = ["P1-38", "P1-36", "P1-38", "P1-26", "P1-24", "P1-22", "P1-18"];
+	var pins = ["P1-38", "P1-36", "P1-26", "P1-24", "P1-22", "P1-18"];
 
 	function init() {
 		board = new five.Board({
@@ -23,7 +23,7 @@ var j5controls = function() {
 				pins.map(function(pin) {
 					buttons.push(new five.Button(pin));	
 				});
-				
+
 				resolve(buttons);
 			});
 		});

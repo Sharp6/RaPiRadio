@@ -10,6 +10,7 @@ module.exports = (function() {
 				callingConvention: "by-position-only"
 			});
 			mopidy.on("state:online", function() {
+				console.log("Mopidy is online");
 				loadPodcastPlaylist()
 					.then(resolve,reject);
 			});
@@ -35,6 +36,7 @@ module.exports = (function() {
 	};
 
 	var loadPodcastPlaylist = function() {
+		console.log("Attempting to load PodcastPlaylist");
 		return mopidy.tracklist.clear()
 			.then(function() {
 				return mopidy.playlists.getPlaylists();
