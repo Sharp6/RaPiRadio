@@ -34,7 +34,9 @@ var j5controls = function() {
 		return Promise.resolve()
 			.then(function() {
 				var btnNumber = 0;
+				console.log("J5CONTROLS: METHODS: ", methods);
 				for(var method in methods) {
+					console.log("J5CONTROLS: ASSIGNING METHOD: ", method);
 					console.log("Assigning button nr", btnNumber);
 					buttons[btnNumber].on("down", method);
 					btnNumber++;
