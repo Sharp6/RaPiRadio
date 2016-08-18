@@ -5,17 +5,20 @@
 var mode = "podcast";
 
 var rprMopidy = require("./rprMopidy");
-var j5controls = require("./j5controls");
+//var j5controls = require("./j5controls");
+var onoffControls = require('./onoffControls');
 var sleeper = require("./sleeper");
 
-Promise.all([rprMopidy.init(), j5controls.init()])
+Promise.all([rprMopidy.init(), onoffControls.init()])
 	.then(function(results){
 		console.log("APP: binding controls");
-		return j5controls.bindControls({
+		return onoffControls.bindControls({
 			enableSleepMode: sleeper.enableSleepMode,
-			switchMode: parameteredSwitchMode,
 			switchState: rprMopidy.switchState,
+			/*
+			switchMode: parameteredSwitchMode,
 			skipTrack: rprMopidy.skipTrack,
+			*/
 			volumeUp: rprMopidy.volumeUp,
 			volumeDown: rprMopidy.volumeDown
 		});

@@ -93,6 +93,7 @@ module.exports = (function() {
 
 	// PUBLIC FUNCTIONALITY ===========================================================================
 	function switchState() {
+		console.log("Switching state");
 		mopidy.playback.getState()
 			.then(function(state) {
 				if(state === "playing") {
@@ -104,6 +105,9 @@ module.exports = (function() {
 	}
 
 	function switchMode(currentMode) {
+		console.log("Dummy method for switchMode");
+		return Promise.resolve();
+		/*
 		var newMode;
 		return Promise.resolve()
 			.then(function () {
@@ -119,6 +123,7 @@ module.exports = (function() {
 				console.log("This should contain the new mode:", newMode);
 				return newMode;
 			});
+*/
 	}
 
 	function volumeUp() {
