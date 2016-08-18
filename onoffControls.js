@@ -18,18 +18,16 @@ var onoffControls = function() {
 		console.log("Binding controls");
 		return Promise.resolve()
 			.then(function() {
-				var btnNumber = 0;
-				for(var method in methods) {
-					buttons[btnNumber].watch(function(err,value) {
+				methods.forEach(function(method,idx) {
+					buttons[idx].watch(function(err,value) {
 						if(err) {
 							console.log(err);
 						}
 						if(value === 1) {
-							methods[method]();
+							method();
 						}
 					});
-					btnNumber++;
-				}
+				});
 				console.log("onoff: controls are bound.");
 			});
 	}

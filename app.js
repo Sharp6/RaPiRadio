@@ -12,16 +12,16 @@ var sleeper = require("./sleeper");
 Promise.all([rprMopidy.init(), onoffControls.init()])
 	.then(function(results){
 		console.log("APP: binding controls");
-		return onoffControls.bindControls({
-			enableSleepMode: sleeper.enableSleepMode,
-			switchState: rprMopidy.switchState,
+		return onoffControls.bindControls([
+			sleeper.enableSleepMode,
+			rprMopidy.switchState,
 			/*
 			switchMode: parameteredSwitchMode,
 			skipTrack: rprMopidy.skipTrack,
 			*/
-			volumeUp: rprMopidy.volumeUp,
-			volumeDown: rprMopidy.volumeDown
-		});
+			rprMopidy.volumeUp,
+			rprMopidy.volumeDown
+		]);
 	})
 	.catch(function(err) {
 		console.log(err);
